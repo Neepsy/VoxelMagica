@@ -1,0 +1,51 @@
+{
+  "variants": {
+    "facing=down,lit=false": {
+      "model": "voxelmagica:block/testblock",
+      "x": -90
+    },
+    "facing=up,lit=false": {
+      "model": "voxelmagica:block/testblock",
+      "x": 90
+    },
+    "facing=north,lit=false": {
+      "model": "voxelmagica:block/testblock"
+    },
+    "facing=south,lit=false": {
+      "model": "voxelmagica:block/testblock",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "voxelmagica:block/testblock",
+      "y": 270
+    },
+    "facing=east,lit=false": {
+      "model": "voxelmagica:block/testblock",
+      "y": 90
+    },
+
+    "facing=down,lit=true": {
+      "model": "voxelmagica:block/testblock_lit",
+      "x": -90
+    },
+    "facing=up,lit=true": {
+      "model": "voxelmagica:block/testblock_lit",
+      "x": 90
+    },
+    "facing=north,lit=true": {
+      "model": "voxelmagica:block/testblock_lit"
+    },
+    "facing=south,lit=true": {
+      "model": "voxelmagica:block/testblock_lit",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "voxelmagica:block/testblock_lit",
+      "y": 270
+    },
+    "facing=east,lit=true": {
+      "model": "voxelmagica:block/testblock_lit",
+      "y": 90
+    }
+  }
+}
