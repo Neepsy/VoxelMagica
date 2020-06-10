@@ -174,6 +174,7 @@ public class VoxelMagica
             EntityRegistryEvent.getRegistry().register(EntityType.Builder.<InfuseProjectileEntity>create(EntityClassification.MISC)
                     .setShouldReceiveVelocityUpdates(false)
                     .size(.1f,.1f)
+                    .setCustomClientFactory(((spawnEntity, world) -> new InfuseProjectileEntity(world)))
                     .build("infuseprojectile")
                     .setRegistryName("infuseprojectile"));
         }

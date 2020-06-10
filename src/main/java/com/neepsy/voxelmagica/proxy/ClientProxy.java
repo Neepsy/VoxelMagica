@@ -33,7 +33,7 @@ import java.util.Random;
 public class ClientProxy implements IProxy {
     public void init(){
         ScreenManager.registerFactory(ModBlocks.TESTBLOCKCONTAINER, TestBlockScreen::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.INFUSEPROJECTILE, InfuseProjectileRenderer3::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.INFUSEPROJECTILE, InfuseProjectileRenderer::new);
     }
 
     @Override
