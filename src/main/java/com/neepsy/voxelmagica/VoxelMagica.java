@@ -99,7 +99,7 @@ public class VoxelMagica
 
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         proxy.init();
-        Constants.setup();
+        Constants.getInstance();
     }
 
     private void doModelBake(final ModelBakeEvent event){

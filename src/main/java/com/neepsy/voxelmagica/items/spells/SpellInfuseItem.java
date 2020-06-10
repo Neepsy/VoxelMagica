@@ -28,7 +28,7 @@ public class SpellInfuseItem extends Item {
         playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
             if(m.getMana() >= manaCost){
                 m.consume(manaCost);
-                ModItems.triggerGCD(playerIn);
+                ModItems.triggerGCD(playerIn, 5);
                 System.out.println(m.getMana() + " mana left!");
 
                 if(!worldIn.isRemote()){

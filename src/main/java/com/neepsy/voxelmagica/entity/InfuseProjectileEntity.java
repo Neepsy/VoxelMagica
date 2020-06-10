@@ -2,11 +2,13 @@ package com.neepsy.voxelmagica.entity;
 
 
 import com.neepsy.voxelmagica.items.ModItems;
+import com.neepsy.voxelmagica.util.Constants;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
@@ -18,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Map;
 
 public class InfuseProjectileEntity extends AbstractArrowEntity {
 
@@ -26,22 +28,25 @@ public class InfuseProjectileEntity extends AbstractArrowEntity {
     public InfuseProjectileEntity(World worldIn){
         super(ModEntities.INFUSEPROJECTILE, worldIn);
         lifetimeTicks = 50;
-        this.pickupStatus = PickupStatus.DISALLOWED;
-        this.setNoGravity(true);
+        pickupStatus = PickupStatus.DISALLOWED;
+        setKnockbackStrength(1);
+        setNoGravity(true);
     }
 
     public InfuseProjectileEntity(EntityType<AbstractArrowEntity> type, World worldIn){
         super(type, worldIn);
         lifetimeTicks = 50;
-        this.pickupStatus = PickupStatus.DISALLOWED;
-        this.setNoGravity(true);
+        pickupStatus = PickupStatus.DISALLOWED;
+        setKnockbackStrength(1);
+        setNoGravity(true);
     }
 
     public InfuseProjectileEntity(PlayerEntity player, World world){
         super(ModEntities.INFUSEPROJECTILE, player,world);
         lifetimeTicks = 50;
-        this.pickupStatus = PickupStatus.DISALLOWED;
-        this.setNoGravity(true);
+        pickupStatus = PickupStatus.DISALLOWED;
+        setKnockbackStrength(1);
+        setNoGravity(true);
     }
 
     @Override
@@ -72,7 +77,7 @@ public class InfuseProjectileEntity extends AbstractArrowEntity {
     protected void onHit(RayTraceResult result) {
         if(result.getType() == RayTraceResult.Type.ENTITY){
             Entity hit = ((EntityRayTraceResult)result).getEntity();
-            hit.attackEntityFrom(DamageSource.causeArrowDamage(this,this.getShooter()), .2f);
+            hit.attackEntityFrom(DamageSource.causeArrowDamage(this,this.getShooter()), 1f);
         }
         if(world.isRemote){
             world.addParticle(ParticleTypes.CLOUD, getPosXRandom(.02), getPosY(), getPosZRandom(.02), 0,0,0);
@@ -83,16 +88,21 @@ public class InfuseProjectileEntity extends AbstractArrowEntity {
             AxisAlignedBB bb = new AxisAlignedBB(this.getPositionVec().add(1,1,1), this.getPositionVec().add(-1,-1,-1));
             List<Entity> nearby = world.getEntitiesInAABBexcluding(this, bb, entity -> true );
             for(Entity e : nearby){
-                System.out.println(e);
+
                 if(e instanceof ItemEntity){
                     ItemEntity item = (ItemEntity) e;
-                    if(item.getItem().getItem() == Items.COAL){
-                        ItemStack stack = item.getItem();
-                        stack.shrink(1);
-                        item.setItem(stack);
+                    Map<Item,Item> recipes =  Constants.getInstance().infusionRecipes;
+                    for(Item i : recipes.keySet()){
+                        if(item.getItem().getItem() == i){
+                            ItemStack shrunk = item.getItem();
+                            shrunk.shrink(1);
+                            item.setItem(shrunk);
 
-                        world.addEntity(new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(Items.DIAMOND, 1)));
-                        break;
+                            Item toCreate = Constants.getInstance().infusionRecipes.get(i);
+                            System.out.println(toCreate);
+                            world.addEntity(new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(toCreate, 1)));
+                            break;
+                        }
                     }
                 }
             }

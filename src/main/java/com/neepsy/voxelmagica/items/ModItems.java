@@ -15,9 +15,9 @@ public class ModItems {
     public static final SpellInfuseItem SPELLINFUSEITEM = null;
 
 
-    public static void triggerGCD(PlayerEntity player){
-        for(Item i : Constants.triggersGlobalCooldown){
-            player.getCooldownTracker().setCooldown(i, 40);
+    public static void triggerGCD(PlayerEntity player, int ticks){
+        for(Item i : Constants.getInstance().triggersGlobalCooldown){
+            player.getCooldownTracker().setCooldown(i, ticks);
         }
     }
 
