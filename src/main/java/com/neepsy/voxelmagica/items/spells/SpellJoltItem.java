@@ -44,7 +44,7 @@ public class SpellJoltItem extends Item{
         ItemStack item = playerIn.getHeldItem(handIn);
         playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
             if(m.getMana() >= manaCost || playerIn.isCreative()){
-                m.consume(playerIn.isCreative() ? 0 : manaCost);
+                m.consume(playerIn.isCreative() ? manaCost : manaCost);
                 ModItems.triggerGCD(playerIn, 30);
                 System.out.println(m.getMana() + " mana left!");
 
@@ -54,9 +54,6 @@ public class SpellJoltItem extends Item{
                 if(!worldIn.isRemote()){
                     JoltProjectileEntity projectile = new JoltProjectileEntity(playerIn, worldIn);
                     projectile.setMotion(0,0,0);
-                    //projectile.accelerationX = 0;
-                    //projectile.accelerationY = 0;
-                    //projectile.accelerationZ = 0;
                     projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,5,0);
                     worldIn.addEntity(projectile);
                 }

@@ -11,6 +11,7 @@ import com.neepsy.voxelmagica.entity.ModEntities;
 import com.neepsy.voxelmagica.items.GriefShardItem;
 import com.neepsy.voxelmagica.items.IconItem;
 import com.neepsy.voxelmagica.items.ModItems;
+import com.neepsy.voxelmagica.items.SoulGemItem;
 import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
 import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
 import com.neepsy.voxelmagica.proxy.ClientProxy;
@@ -157,6 +158,7 @@ public class VoxelMagica
             Item.Properties common = new Item.Properties().group(creativeTab);
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, common).setRegistryName("testblock"));
             itemRegistryEvent.getRegistry().register(new IconItem());
+            itemRegistryEvent.getRegistry().register(new SoulGemItem());
             itemRegistryEvent.getRegistry().register(new SpellInfuseItem());
             itemRegistryEvent.getRegistry().register(new SpellJoltItem());
             itemRegistryEvent.getRegistry().register(new GriefShardItem());

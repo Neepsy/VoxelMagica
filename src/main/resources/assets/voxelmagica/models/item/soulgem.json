@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "voxelmagica:item/soulgemnbright"
+  },
+  "overrides": [
+    { "predicate": { "condition": 0.0 }, "model": "voxelmagica:item/soulgemstates/critical"},
+    { "predicate": { "condition": 0.25 }, "model": "voxelmagica:item/soulgemstates/dim"},
+    { "predicate": { "condition": 0.50 }, "model": "voxelmagica:item/soulgemstates/average"},
+    { "predicate": { "condition": 0.75 }, "model": "voxelmagica:item/soulgemstates/bright"},
+    { "predicate": { "condition": 0.9 }, "model": "voxelmagica:item/soulgemstates/max"}
+  ]
+}
