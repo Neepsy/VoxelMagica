@@ -19,19 +19,25 @@ public abstract class SpellEntity extends DamagingProjectileEntity {
         super(type, player,0, 0,0 , world);
     }
 
-    //Shoot method taken from vanilla ThrowableEntity
-    public void shoot(Entity entityShooter, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity) {
-        float f = -MathHelper.sin(rotationYawIn * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitchIn * ((float)Math.PI / 180F));
-        float f1 = -MathHelper.sin((rotationPitchIn + pitchOffset) * ((float)Math.PI / 180F));
-        float f2 = MathHelper.cos(rotationYawIn * ((float)Math.PI / 180F)) * MathHelper.cos(rotationPitchIn * ((float)Math.PI / 180F));
-        this.shoot((double)f, (double)f1, (double)f2, velocity);
-        Vec3d vec3d = entityShooter.getMotion();
-        this.setMotion(this.getMotion().add(vec3d.x, entityShooter.onGround ? 0.0D : vec3d.y, vec3d.z));
+    @Override
+    protected boolean isFireballFiery() {
+        return false;
     }
 
+    //copied from AbstractArrowEntity
+    public void shoot(Entity shooter, float pitch, float yaw, float p_184547_4_, float velocity, float inaccuracy) {
+        float f = -MathHelper.sin(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+        float f1 = -MathHelper.sin(pitch * ((float)Math.PI / 180F));
+        float f2 = MathHelper.cos(yaw * ((float)Math.PI / 180F)) * MathHelper.cos(pitch * ((float)Math.PI / 180F));
+        this.shoot((double)f, (double)f1, (double)f2, velocity, inaccuracy);
+        this.setMotion(this.getMotion().add(shooter.getMotion().x, shooter.onGround ? 0.0D : shooter.getMotion().y, shooter.getMotion().z));
+    }
 
-    public void shoot(double x, double y, double z, float velocity) {
-        Vec3d vec3d = (new Vec3d(x, y, z)).normalize();
+    /**
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z direction.
+     */
+    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+        Vec3d vec3d = (new Vec3d(x, y, z)).normalize().add(this.rand.nextGaussian() * (double)0.0075F * (double)inaccuracy, this.rand.nextGaussian() * (double)0.0075F * (double)inaccuracy, this.rand.nextGaussian() * (double)0.0075F * (double)inaccuracy).scale((double)velocity);
         this.setMotion(vec3d);
         float f = MathHelper.sqrt(horizontalMag(vec3d));
         this.rotationYaw = (float)(MathHelper.atan2(vec3d.x, vec3d.z) * (double)(180F / (float)Math.PI));

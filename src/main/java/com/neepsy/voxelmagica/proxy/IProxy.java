@@ -9,4 +9,5 @@ public interface IProxy {
     World getClientWorld();
 
     void onModelBake(ModelBakeEvent e);
+    void loadModels();
 }

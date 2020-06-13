@@ -19,4 +19,9 @@ public class ServerProxy implements IProxy {
     public void onModelBake(ModelBakeEvent e) {
         //nothing to do on server side
     }
+
+    @Override
+    public void loadModels(){
+        //only needed on client proxy
+    }
 }

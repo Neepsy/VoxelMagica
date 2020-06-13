@@ -27,22 +27,19 @@ public class InfuseProjectileEntity extends AbstractArrowEntity {
     int lifetimeTicks;
     public InfuseProjectileEntity(World worldIn){
         super(ModEntities.INFUSEPROJECTILE, worldIn);
-        lifetimeTicks = 50;
-        pickupStatus = PickupStatus.DISALLOWED;
-        setKnockbackStrength(1);
-        setNoGravity(true);
+        init();
     }
 
     public InfuseProjectileEntity(EntityType<AbstractArrowEntity> type, World worldIn){
         super(type, worldIn);
-        lifetimeTicks = 50;
-        pickupStatus = PickupStatus.DISALLOWED;
-        setKnockbackStrength(1);
-        setNoGravity(true);
+        init();
     }
 
     public InfuseProjectileEntity(PlayerEntity player, World world){
         super(ModEntities.INFUSEPROJECTILE, player,world);
+        init();
+    }
+    private void init(){
         lifetimeTicks = 50;
         pickupStatus = PickupStatus.DISALLOWED;
         setKnockbackStrength(1);
@@ -58,7 +55,7 @@ public class InfuseProjectileEntity extends AbstractArrowEntity {
         }
 
         if(world.isRemote()){
-            this.world.addParticle(ParticleTypes.CRIT, this.getPosX(), this.getPosY(), this.getPosZ(),0,0,0);
+            this.world.addParticle(ParticleTypes.ENCHANTED_HIT, this.getPosX(), this.getPosY(), this.getPosZ(),0,0,0);
         }
     }
 

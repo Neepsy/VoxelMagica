@@ -1,5 +1,10 @@
 ﻿{
   "block.voxelmagica.testblock": "Testing Block",
+  "item.voxelmagica.spellinfuse": "§bInfuse",
+  "item.voxelmagica.iconitem": "Creative Tab Icon Placeholder",
+  "item.voxelmagica.griefshard": "Grief Shard",
+  "item.voxelmagica.spelljolt": "§bJolt",
 
+  "effect.voxelmagica.smartcast": "Smartcast",
   "itemGroup.voxelmagica": "Voxel★Magica"
 }

@@ -23,8 +23,12 @@ public class Config {
     public static ForgeConfigSpec.IntValue TESTBLOCK_BURNTIME;
     public static ForgeConfigSpec.IntValue TESTBLOCK_XFER;
 
+    public static ForgeConfigSpec.IntValue GRIEFSHARD_RESTORE;
+
     static {
         COMMON_BUILDER.comment("General").push(CATEGORY_GENERAL);
+        GRIEFSHARD_RESTORE = COMMON_BUILDER.comment("Mana restored by a Grief Shard")
+                .defineInRange("griefShardRestore",500,0,10000);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.comment("Energy Settings").push(CATEGORY_ENERGY);

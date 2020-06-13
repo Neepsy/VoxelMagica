@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "voxelmagica:item/spellinfuse"
+    "layer0": "voxelmagica:item/spelljolt"
   }
 }

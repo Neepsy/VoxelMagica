@@ -4,11 +4,15 @@ import com.neepsy.voxelmagica.blocks.ModBlocks;
 import com.neepsy.voxelmagica.blocks.TestBlock;
 import com.neepsy.voxelmagica.blocks.TestBlockContainer;
 import com.neepsy.voxelmagica.blocks.TestBlockTile;
+import com.neepsy.voxelmagica.effects.SmartcastEffect;
 import com.neepsy.voxelmagica.entity.InfuseProjectileEntity;
+import com.neepsy.voxelmagica.entity.JoltProjectileEntity;
 import com.neepsy.voxelmagica.entity.ModEntities;
+import com.neepsy.voxelmagica.items.GriefShardItem;
 import com.neepsy.voxelmagica.items.IconItem;
 import com.neepsy.voxelmagica.items.ModItems;
 import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
+import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
 import com.neepsy.voxelmagica.proxy.ClientProxy;
 import com.neepsy.voxelmagica.proxy.IProxy;
 import com.neepsy.voxelmagica.proxy.ServerProxy;
@@ -22,6 +26,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -103,15 +108,15 @@ public class VoxelMagica
     }
 
     private void doModelBake(final ModelBakeEvent event){
+        //Have Constants singleton setup as it is needed for baking models.
+        Constants.getInstance();
         proxy.onModelBake(event);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-        ModelResourceLocation test = new ModelResourceLocation(ModItems.SPELLINFUSEITEM.getRegistryName() + "_hand", "inventory");
-        ModelLoader.addSpecialModel(test);
-        System.out.println(test);
+        proxy.loadModels();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -153,6 +158,10 @@ public class VoxelMagica
             itemRegistryEvent.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, common).setRegistryName("testblock"));
             itemRegistryEvent.getRegistry().register(new IconItem());
             itemRegistryEvent.getRegistry().register(new SpellInfuseItem());
+            itemRegistryEvent.getRegistry().register(new SpellJoltItem());
+            itemRegistryEvent.getRegistry().register(new GriefShardItem());
+
+
         }
 
         @SubscribeEvent
@@ -177,8 +186,18 @@ public class VoxelMagica
                     .setCustomClientFactory(((spawnEntity, world) -> new InfuseProjectileEntity(world)))
                     .build("infuseprojectile")
                     .setRegistryName("infuseprojectile"));
+            EntityRegistryEvent.getRegistry().register(EntityType.Builder.<JoltProjectileEntity>create(EntityClassification.MISC)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .size(.1f,.1f)
+                    .setCustomClientFactory(((spawnEntity, world) -> new JoltProjectileEntity(world)))
+                    .setUpdateInterval(2)
+                    .build("joltprojectile")
+                    .setRegistryName("joltprojectile"));
         }
 
-
+        @SubscribeEvent
+        public static void onEffectRegistry(final RegistryEvent.Register<Effect> EffectRegistryEvent){
+            EffectRegistryEvent.getRegistry().register(new SmartcastEffect().setRegistryName("smartcast"));
+        }
     }
 }

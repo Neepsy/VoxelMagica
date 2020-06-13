@@ -1,6 +1,7 @@
 package com.neepsy.voxelmagica.items;
 
 import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
+import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
 import com.neepsy.voxelmagica.util.Constants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -13,6 +14,12 @@ public class ModItems {
 
     @ObjectHolder("voxelmagica:spellinfuse")
     public static final SpellInfuseItem SPELLINFUSEITEM = null;
+
+    @ObjectHolder("voxelmagica:griefshard")
+    public static final GriefShardItem GRIEFSHARDITEM = null;
+
+    @ObjectHolder("voxelmagica:spelljolt")
+    public static final SpellJoltItem SPELLJOLTITEM = null;
 
 
     public static void triggerGCD(PlayerEntity player, int ticks){
