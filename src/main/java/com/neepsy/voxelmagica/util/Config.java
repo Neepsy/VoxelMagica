@@ -11,6 +11,7 @@ import java.nio.file.Path;
 public class Config {
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_ENERGY = "energy";
+    public static final String CATEGORY_SPELLS = "spells";
 
     private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
     private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
@@ -24,11 +25,25 @@ public class Config {
     public static ForgeConfigSpec.IntValue TESTBLOCK_XFER;
 
     public static ForgeConfigSpec.IntValue GRIEFSHARD_RESTORE;
+    public static ForgeConfigSpec.IntValue GCD;
+
+    public static ForgeConfigSpec.DoubleValue JOLT_DMG;
+    public static ForgeConfigSpec.DoubleValue SHOCKBOLT_DMG;
+
 
     static {
         COMMON_BUILDER.comment("General").push(CATEGORY_GENERAL);
         GRIEFSHARD_RESTORE = COMMON_BUILDER.comment("Mana restored by a Grief Shard")
                 .defineInRange("griefShardRestore",500,0,10000);
+        GCD = COMMON_BUILDER.comment("Cooldown in ticks shared by all spells")
+                .defineInRange("globalCoolDown",25,1,200);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.comment("General").push(CATEGORY_SPELLS);
+        JOLT_DMG = COMMON_BUILDER.comment("Damage dealt by Jolt (50% armor pen)")
+                .defineInRange("joltDamage",9f,1f,100f);
+        SHOCKBOLT_DMG = COMMON_BUILDER.comment("Damage dealt by Shockbolt and Aeroblast (50% armor pen)")
+                .defineInRange("shockboltDamage",12f,1f,100f);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.comment("Energy Settings").push(CATEGORY_ENERGY);

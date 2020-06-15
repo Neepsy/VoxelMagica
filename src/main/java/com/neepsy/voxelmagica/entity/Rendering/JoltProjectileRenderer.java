@@ -1,7 +1,8 @@
-package com.neepsy.voxelmagica.entity;
+package com.neepsy.voxelmagica.entity.Rendering;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.neepsy.voxelmagica.entity.JoltProjectileEntity;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;

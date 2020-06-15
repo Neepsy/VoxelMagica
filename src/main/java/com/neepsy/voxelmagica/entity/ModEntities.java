@@ -8,5 +8,11 @@ public class ModEntities {
     public static final EntityType<InfuseProjectileEntity> INFUSEPROJECTILE = null;
 
     @ObjectHolder("voxelmagica:joltprojectile")
-    public static final EntityType<JoltProjectileEntity> JOLTPROJECTILEENTITY = null;
+    public static final EntityType<JoltProjectileEntity> JOLTPROJECTILE = null;
+
+    @ObjectHolder("voxelmagica:shockboltprojectile")
+    public static final EntityType<ShockboltProjectileEntity> SHOCKBOLTPROJECTILE = null;
+
+    @ObjectHolder("voxelmagica:aeroblastprojectile")
+    public static final EntityType<AeroblastProjectileEntity> AEROBLASTPROJECTILE = null;
 }

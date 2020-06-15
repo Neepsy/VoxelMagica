@@ -25,4 +25,13 @@ public class CapabilityHandler {
             e.getPlayer().sendMessage(new StringTextComponent(msg));
         });
     }
+
+    @SubscribeEvent
+    public void clonePlayer(PlayerEvent.Clone e){
+        e.getOriginal().getCapability(ManaProvider.MANA_CAP).ifPresent(m ->{
+            e.getPlayer().getCapability(ManaProvider.MANA_CAP).ifPresent(newMana ->{
+                newMana.setMana(Math.max(0,m.getMana()-1000));
+            });
+        });
+    }
 }

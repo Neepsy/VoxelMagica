@@ -35,6 +35,8 @@ public class Constants {
         triggersGlobalCooldown.add(ModItems.ICONITEM);
         triggersGlobalCooldown.add(ModItems.SPELLINFUSEITEM);
         triggersGlobalCooldown.add(ModItems.SPELLJOLTITEM);
+        triggersGlobalCooldown.add(ModItems.SPELLSHOCKBOLTITEM);
+        triggersGlobalCooldown.add(ModItems.SPELLAEROBLASTITEM);
 
         infusionRecipes = new HashMap();
         infusionRecipes.put(Items.COAL, Items.DIAMOND);
@@ -44,6 +46,8 @@ public class Constants {
         needsCustomModel.put(ModItems.SPELLINFUSEITEM, 0);
         needsCustomModel.put(ModItems.ICONITEM, 1);
         needsCustomModel.put(ModItems.SPELLJOLTITEM, 1);
+        needsCustomModel.put(ModItems.SPELLSHOCKBOLTITEM,1);
+        needsCustomModel.put(ModItems.SPELLAEROBLASTITEM,1);
 
     }
 }

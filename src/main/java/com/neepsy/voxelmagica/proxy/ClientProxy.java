@@ -5,12 +5,14 @@ import com.neepsy.voxelmagica.VoxelMagica;
 import com.neepsy.voxelmagica.blocks.ModBlocks;
 import com.neepsy.voxelmagica.blocks.TestBlockScreen;
 import com.neepsy.voxelmagica.entity.*;
-import com.neepsy.voxelmagica.items.ModItems;
+import com.neepsy.voxelmagica.entity.Rendering.AeroblastProjectileRenderer;
+import com.neepsy.voxelmagica.entity.Rendering.InfuseProjectileRenderer;
+import com.neepsy.voxelmagica.entity.Rendering.JoltProjectileRenderer;
+import com.neepsy.voxelmagica.entity.Rendering.ShockboltProjectileRenderer;
 import com.neepsy.voxelmagica.util.Constants;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.Item;
@@ -20,13 +22,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.model.Models;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 
 import javax.annotation.Nullable;
@@ -38,7 +36,9 @@ public class ClientProxy implements IProxy {
     public void init(){
         ScreenManager.registerFactory(ModBlocks.TESTBLOCKCONTAINER, TestBlockScreen::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.INFUSEPROJECTILE, InfuseProjectileRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.JOLTPROJECTILEENTITY, JoltProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.JOLTPROJECTILE, JoltProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.SHOCKBOLTPROJECTILE, ShockboltProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.AEROBLASTPROJECTILE, AeroblastProjectileRenderer::new);
     }
 
     @Override

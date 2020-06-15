@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "voxelmagica:item/soulgemnbright"
+    "layer0": "voxelmagica:item/soulgemstates/soulgemnbright"
   },
   "overrides": [
     { "predicate": { "condition": 0.0 }, "model": "voxelmagica:item/soulgemstates/critical"},

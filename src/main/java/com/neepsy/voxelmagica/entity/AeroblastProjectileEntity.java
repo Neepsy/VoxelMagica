@@ -12,17 +12,18 @@ import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class JoltProjectileEntity extends ProjectileItemEntity {
+public class AeroblastProjectileEntity extends ProjectileItemEntity {
     private int lifetimeTicks;
-    public static RedstoneParticleData particles = new RedstoneParticleData(.8f,.1f,.1f,1f);
-    private static float damage = Config.JOLT_DMG.get().floatValue();
+    public static RedstoneParticleData particles = new RedstoneParticleData(.32f,.85f,.32f,1f);
+    private static float damage = Config.SHOCKBOLT_DMG.get().floatValue();
+    private static int knockbackStrength = 1;
 
-    public JoltProjectileEntity(World worldIn){
-        super(ModEntities.JOLTPROJECTILE, worldIn);
+    public AeroblastProjectileEntity(World worldIn){
+        super(ModEntities.AEROBLASTPROJECTILE, worldIn);
         init();
     }
 
@@ -31,15 +32,17 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
         return Items.REDSTONE;
     }
 
-    public JoltProjectileEntity(PlayerEntity playerIn, World worldIn){
-        super(ModEntities.JOLTPROJECTILE, playerIn, worldIn);
+    public AeroblastProjectileEntity(PlayerEntity playerIn, World worldIn){
+        super(ModEntities.AEROBLASTPROJECTILE, playerIn, worldIn);
         init();
     }
 
     private void init(){
-        lifetimeTicks = 100;
+        lifetimeTicks = 125;
         setNoGravity(true);
     }
+
+
 
     @Override
     public void tick() {
@@ -50,13 +53,7 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
         }
 
         if(world.isRemote){
-            Vec3d vec3d = this.getMotion();
-            double d3 = vec3d.x;
-            double d4 = vec3d.y;
-            double d0 = vec3d.z;
-            for(int i = 0; i < 4; ++i) {
-                this.world.addParticle(particles, this.getPosX() + d3 * (double)i / 4.0D, this.getPosY() + d4 * (double)i / 4.0D, this.getPosZ() + d0 * (double)i / 4.0D, -d3, -d4 + 0.2D, -d0);
-            }
+            world.addParticle(particles,getPosX(),getPosY(),getPosZ(),0,0,0);
         }
 
     }
@@ -69,10 +66,15 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
         if(result.getType() == RayTraceResult.Type.ENTITY){
             Entity hit = ((EntityRayTraceResult)result).getEntity();
 
-            hit.attackEntityFrom(DamageSource.causeIndirectDamage(this,getThrower()), damage /2);
+            hit.attackEntityFrom(DamageSource.causeIndirectDamage(this,getThrower()), damage / 2);
             //reset iframes to deal magic part of damage;
             hit.hurtResistantTime = 0;
-            hit.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this,getThrower()), damage /2);
+            hit.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this,getThrower()), damage / 2);
+
+            Vec3d vec3d = this.getMotion().mul(0.4D, 0.0D, .4D).normalize().scale((double)this.knockbackStrength * 0.2D);
+            if (vec3d.lengthSquared() > 0.0D) {
+                hit.addVelocity(vec3d.x, 0.1D, vec3d.z);
+            }
         }
         this.remove();
     }
@@ -81,5 +83,4 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
-
 }

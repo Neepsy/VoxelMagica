@@ -1,6 +1,7 @@
-package com.neepsy.voxelmagica.entity;
+package com.neepsy.voxelmagica.entity.Rendering;
 
 import com.neepsy.voxelmagica.VoxelMagica;
+import com.neepsy.voxelmagica.entity.InfuseProjectileEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;

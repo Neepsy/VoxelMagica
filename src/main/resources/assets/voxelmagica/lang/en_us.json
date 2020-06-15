@@ -4,8 +4,12 @@
   "item.voxelmagica.iconitem": "Creative Tab Icon Placeholder",
   "item.voxelmagica.griefshard": "Grief Shard",
   "item.voxelmagica.spelljolt": "§bJolt",
+  "item.voxelmagica.spellshockbolt": "§bShockbolt",
+  "item.voxelmagica.spellaeroblast": "§bAeroblast",
   "item.voxelmagica.soulgem": "§bSoul Gem",
 
   "effect.voxelmagica.smartcast": "Smartcast",
+  "effect.voxelmagica.blackmana": "Umbral Charge",
+  "effect.voxelmagica.whitemana": "Astral Charge",
   "itemGroup.voxelmagica": "Voxel★Magica"
 }

@@ -4,16 +4,18 @@ import com.neepsy.voxelmagica.blocks.ModBlocks;
 import com.neepsy.voxelmagica.blocks.TestBlock;
 import com.neepsy.voxelmagica.blocks.TestBlockContainer;
 import com.neepsy.voxelmagica.blocks.TestBlockTile;
+import com.neepsy.voxelmagica.effects.BlackManaEffect;
 import com.neepsy.voxelmagica.effects.SmartcastEffect;
-import com.neepsy.voxelmagica.entity.InfuseProjectileEntity;
-import com.neepsy.voxelmagica.entity.JoltProjectileEntity;
-import com.neepsy.voxelmagica.entity.ModEntities;
+import com.neepsy.voxelmagica.effects.WhiteManaEffect;
+import com.neepsy.voxelmagica.entity.*;
 import com.neepsy.voxelmagica.items.GriefShardItem;
 import com.neepsy.voxelmagica.items.IconItem;
 import com.neepsy.voxelmagica.items.ModItems;
 import com.neepsy.voxelmagica.items.SoulGemItem;
+import com.neepsy.voxelmagica.items.spells.SpellAeroblastItem;
 import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
 import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
+import com.neepsy.voxelmagica.items.spells.SpellShockboltItem;
 import com.neepsy.voxelmagica.proxy.ClientProxy;
 import com.neepsy.voxelmagica.proxy.IProxy;
 import com.neepsy.voxelmagica.proxy.ServerProxy;
@@ -161,6 +163,8 @@ public class VoxelMagica
             itemRegistryEvent.getRegistry().register(new SoulGemItem());
             itemRegistryEvent.getRegistry().register(new SpellInfuseItem());
             itemRegistryEvent.getRegistry().register(new SpellJoltItem());
+            itemRegistryEvent.getRegistry().register(new SpellShockboltItem());
+            itemRegistryEvent.getRegistry().register(new SpellAeroblastItem());
             itemRegistryEvent.getRegistry().register(new GriefShardItem());
 
 
@@ -192,14 +196,31 @@ public class VoxelMagica
                     .setShouldReceiveVelocityUpdates(true)
                     .size(.1f,.1f)
                     .setCustomClientFactory(((spawnEntity, world) -> new JoltProjectileEntity(world)))
-                    .setUpdateInterval(2)
+                    .setUpdateInterval(1)
                     .build("joltprojectile")
                     .setRegistryName("joltprojectile"));
+            EntityRegistryEvent.getRegistry().register(EntityType.Builder.<ShockboltProjectileEntity>create(EntityClassification.MISC)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .size(.1f,.1f)
+                    .setCustomClientFactory(((spawnEntity, world) -> new ShockboltProjectileEntity(world)))
+                    .setUpdateInterval(1)
+                    .build("shockboltprojectile")
+                    .setRegistryName("shockboltprojectile"));
+            EntityRegistryEvent.getRegistry().register(EntityType.Builder.<AeroblastProjectileEntity>create(EntityClassification.MISC)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .size(.1f,.1f)
+                    .setCustomClientFactory(((spawnEntity, world) -> new AeroblastProjectileEntity(world)))
+                    .setUpdateInterval(1)
+                    .build("aeroblastprojectile")
+                    .setRegistryName("aeroblastprojectile"));
         }
 
         @SubscribeEvent
         public static void onEffectRegistry(final RegistryEvent.Register<Effect> EffectRegistryEvent){
             EffectRegistryEvent.getRegistry().register(new SmartcastEffect().setRegistryName("smartcast"));
+            EffectRegistryEvent.getRegistry().register(new WhiteManaEffect().setRegistryName("whitemana"));
+            EffectRegistryEvent.getRegistry().register(new BlackManaEffect().setRegistryName("blackmana"));
+
         }
     }
 }

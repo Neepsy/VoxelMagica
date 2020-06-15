@@ -7,6 +7,7 @@ import com.neepsy.voxelmagica.effects.SmartcastEffect;
 import com.neepsy.voxelmagica.entity.InfuseProjectileEntity;
 import com.neepsy.voxelmagica.entity.JoltProjectileEntity;
 import com.neepsy.voxelmagica.items.ModItems;
+import com.neepsy.voxelmagica.util.Config;
 import com.neepsy.voxelmagica.util.ManaProvider;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -20,13 +21,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class SpellJoltItem extends Item{
 
-    private int manaCost = 200;
+    private static int manaCost = 200;
+    private static int cooldown = Config.GCD.get();
 
     public SpellJoltItem(){
         super(new Item.Properties().maxStackSize(1).group(VoxelMagica.creativeTab));
@@ -45,16 +49,15 @@ public class SpellJoltItem extends Item{
         playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
             if(m.getMana() >= manaCost || playerIn.isCreative()){
                 m.consume(playerIn.isCreative() ? manaCost : manaCost);
-                ModItems.triggerGCD(playerIn, 30);
-                System.out.println(m.getMana() + " mana left!");
+                ModItems.triggerGCD(playerIn, cooldown);
 
-                EffectInstance smartcast = new EffectInstance(ModEffects.SMARTCAST_EFFECT,400,0,true,true);
+                EffectInstance smartcast = new EffectInstance(ModEffects.SMARTCAST_EFFECT,400,0,false,true);
                 playerIn.addPotionEffect(smartcast);
 
                 if(!worldIn.isRemote()){
                     JoltProjectileEntity projectile = new JoltProjectileEntity(playerIn, worldIn);
                     projectile.setMotion(0,0,0);
-                    projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,5,0);
+                    projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,4,0);
                     worldIn.addEntity(projectile);
                 }
 
@@ -63,4 +66,6 @@ public class SpellJoltItem extends Item{
 
         return ActionResult.resultSuccess(item);
     }
+
+
 }
