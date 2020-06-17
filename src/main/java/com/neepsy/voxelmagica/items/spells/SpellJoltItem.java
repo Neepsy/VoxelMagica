@@ -68,4 +68,6 @@ public class SpellJoltItem extends Item{
     }
 
 
+
+
 }

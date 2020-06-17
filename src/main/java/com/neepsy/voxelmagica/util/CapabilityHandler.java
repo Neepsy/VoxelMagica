@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class CapabilityHandler {
     @SubscribeEvent
     public void attachCapability(AttachCapabilitiesEvent<Entity> e){
-        if(e.getObject() instanceof PlayerEntity){
+        if(e.getObject() instanceof PlayerEntity && !e.getObject().world.isRemote()){
             e.addCapability(new ResourceLocation(VoxelMagica.MODID,"mana"), new ManaProvider());
             System.out.println("Added mana to player");
         }

@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -17,27 +18,28 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SoulGemItem extends Item {
 
-    private float manaPercent;
+    //private float manaPercent;
     private static final long UPDATE_FREQ_MILLIS = 6000;
-    private long lastUpdateTime;
+    private int ticksSinceUpdate = 0;
 
     public SoulGemItem(){
         super(new Item.Properties().maxStackSize(1).group(VoxelMagica.creativeTab));
         setRegistryName("soulgem");
-        lastUpdateTime = System.currentTimeMillis();
         this.addPropertyOverride(new ResourceLocation("condition"),new SoulGemAnimator());
+
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack item = playerIn.getHeldItem(handIn);
+        updateMana(playerIn);
         playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
             if(!worldIn.isRemote()){
-                recalculateMana(m.getMana());
-                playerIn.sendMessage(generateMessage(getManaPercentageInt()));
+                playerIn.sendMessage(generateMessage(item));
             }
         });
 
@@ -46,11 +48,15 @@ public class SoulGemItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(generateMessage(getManaPercentageInt()));
+        tooltip.add(generateMessage(stack));
+        tooltip.add(new StringTextComponent("Ok, it's not actually your soul gem"));
     }
 
-    private StringTextComponent generateMessage(int mana){
-        int manaPercent = getManaPercentageInt();
+
+
+    private StringTextComponent generateMessage(ItemStack stack){
+        CompoundNBT nbt = stack.getOrCreateTag();
+        int manaPercent = (int) (((float) nbt.getInt("mana") / 10000) * 100);
         StringTextComponent msg = new StringTextComponent("Soul gem at ");
         StringTextComponent percentage = new StringTextComponent(manaPercent + "%");
         if(manaPercent >= 95)
@@ -65,35 +71,30 @@ public class SoulGemItem extends Item {
         return msg;
     }
 
-    public int getManaPercentageInt(){
-        return (int) (manaPercent * 100);
-    }
 
-    public float getManaPercentage(){
-        return manaPercent;
-    }
+    public int updateMana(Entity entity){
+        AtomicInteger mana = new AtomicInteger(-1);
+        if(entity instanceof  PlayerEntity){
+            PlayerEntity playerIn = (PlayerEntity) entity;
 
-
-    private void recalculateMana(int mana){
-        manaPercent = (float) mana/ 10000f;
+            playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
+                mana.set(m.getMana());
+            });
+        }
+        return mana.get();
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        //perform every 10 seconds
         super.inventoryTick(stack,worldIn,entityIn,itemSlot,isSelected);
+        ticksSinceUpdate++;
 
-        //Only check every 10 seconds
-        if(entityIn instanceof  PlayerEntity && System.currentTimeMillis() - lastUpdateTime >= UPDATE_FREQ_MILLIS){
+        if(entityIn instanceof  PlayerEntity && ticksSinceUpdate > 20 && !worldIn.isRemote()){
             PlayerEntity playerIn = (PlayerEntity) entityIn;
-
-            playerIn.getCapability(ManaProvider.MANA_CAP).ifPresent(m -> {
-                if(!worldIn.isRemote()){
-                    recalculateMana(m.getMana());
-                    lastUpdateTime = System.currentTimeMillis();
-                    System.out.println("Mana%: " + getManaPercentageInt());
-                }
-            });
+            int mana = updateMana(playerIn);
+            CompoundNBT nbt = stack.getOrCreateTag();
+            nbt.putInt("mana",mana);
+            ticksSinceUpdate = 0;
         }
     }
 }

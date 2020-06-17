@@ -6,6 +6,8 @@
   "item.voxelmagica.spelljolt": "§bJolt",
   "item.voxelmagica.spellshockbolt": "§bShockbolt",
   "item.voxelmagica.spellaeroblast": "§bAeroblast",
+  "item.voxelmagica.spellscorch": "§bScorch (Jolt)",
+  "item.voxelmagica.spellscorch.ready": "§bScorch (READY!)",
   "item.voxelmagica.soulgem": "§bSoul Gem",
 
   "effect.voxelmagica.smartcast": "Smartcast",

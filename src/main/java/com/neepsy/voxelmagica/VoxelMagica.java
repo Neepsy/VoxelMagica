@@ -12,10 +12,7 @@ import com.neepsy.voxelmagica.items.GriefShardItem;
 import com.neepsy.voxelmagica.items.IconItem;
 import com.neepsy.voxelmagica.items.ModItems;
 import com.neepsy.voxelmagica.items.SoulGemItem;
-import com.neepsy.voxelmagica.items.spells.SpellAeroblastItem;
-import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
-import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
-import com.neepsy.voxelmagica.items.spells.SpellShockboltItem;
+import com.neepsy.voxelmagica.items.spells.*;
 import com.neepsy.voxelmagica.proxy.ClientProxy;
 import com.neepsy.voxelmagica.proxy.IProxy;
 import com.neepsy.voxelmagica.proxy.ServerProxy;
@@ -165,6 +162,7 @@ public class VoxelMagica
             itemRegistryEvent.getRegistry().register(new SpellJoltItem());
             itemRegistryEvent.getRegistry().register(new SpellShockboltItem());
             itemRegistryEvent.getRegistry().register(new SpellAeroblastItem());
+            itemRegistryEvent.getRegistry().register(new SpellScorchItem());
             itemRegistryEvent.getRegistry().register(new GriefShardItem());
 
 

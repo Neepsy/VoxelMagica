@@ -1,9 +1,6 @@
 package com.neepsy.voxelmagica.items;
 
-import com.neepsy.voxelmagica.items.spells.SpellAeroblastItem;
-import com.neepsy.voxelmagica.items.spells.SpellInfuseItem;
-import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
-import com.neepsy.voxelmagica.items.spells.SpellShockboltItem;
+import com.neepsy.voxelmagica.items.spells.*;
 import com.neepsy.voxelmagica.util.Constants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,6 +25,9 @@ public class ModItems {
 
     @ObjectHolder("voxelmagica:spellaeroblast")
     public static final SpellAeroblastItem SPELLAEROBLASTITEM = null;
+
+    @ObjectHolder("voxelmagica:spellscorch")
+    public static final SpellScorchItem SPELLSCORCHITEM = null;
 
     @ObjectHolder("voxelmagica:griefshard")
     public static final GriefShardItem GRIEFSHARDITEM = null;

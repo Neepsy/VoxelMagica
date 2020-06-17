@@ -36,7 +36,7 @@ public class SpellAeroblastItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent("MP Cost: 600 (250)"));
-        tooltip.add(new StringTextComponent("Smartcast").applyTextStyle(TextFormatting.GOLD).appendSibling(new StringTextComponent(" reduces mana cost")));
+        tooltip.add(new StringTextComponent("Smartcast").applyTextStyle(TextFormatting.GOLD).appendSibling(new StringTextComponent(" reduces mana cost").applyTextStyle(TextFormatting.RESET)));
         tooltip.add(new StringTextComponent("Grants one stack of ").appendSibling(new StringTextComponent("Astral Charge").applyTextStyle(TextFormatting.GOLD)));
     }
 

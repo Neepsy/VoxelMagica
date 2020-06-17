@@ -5,10 +5,7 @@ import com.neepsy.voxelmagica.items.spells.SpellJoltItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Constants {
 
@@ -37,17 +34,19 @@ public class Constants {
         triggersGlobalCooldown.add(ModItems.SPELLJOLTITEM);
         triggersGlobalCooldown.add(ModItems.SPELLSHOCKBOLTITEM);
         triggersGlobalCooldown.add(ModItems.SPELLAEROBLASTITEM);
+        triggersGlobalCooldown.add(ModItems.SPELLSCORCHITEM);
 
         infusionRecipes = new HashMap();
         infusionRecipes.put(Items.COAL, Items.DIAMOND);
         infusionRecipes.put(Items.IRON_INGOT, Items.GOLD_INGOT);
 
-        needsCustomModel = new HashMap();
+        needsCustomModel = new LinkedHashMap();
         needsCustomModel.put(ModItems.SPELLINFUSEITEM, 0);
         needsCustomModel.put(ModItems.ICONITEM, 1);
         needsCustomModel.put(ModItems.SPELLJOLTITEM, 1);
         needsCustomModel.put(ModItems.SPELLSHOCKBOLTITEM,1);
         needsCustomModel.put(ModItems.SPELLAEROBLASTITEM,1);
+        needsCustomModel.put(ModItems.SPELLSCORCHITEM, 1);
 
     }
 }
