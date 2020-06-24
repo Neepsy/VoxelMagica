@@ -1,25 +1,34 @@
 package com.neepsy.voxelmagica.entity;
 
+import com.ibm.icu.text.MessagePattern;
 import com.neepsy.voxelmagica.util.Config;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
+import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import java.util.Random;
+
 public class JoltProjectileEntity extends ProjectileItemEntity {
     private int lifetimeTicks;
     public static RedstoneParticleData particles = new RedstoneParticleData(.8f,.1f,.1f,1f);
     private static float damage = Config.JOLT_DMG.get().floatValue();
+    private static Random rand = new Random();
 
     public JoltProjectileEntity(World worldIn){
         super(ModEntities.JOLTPROJECTILE, worldIn);
@@ -64,7 +73,12 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         if(world.isRemote()){
-            world.addParticle(ParticleTypes.EXPLOSION,getPosXRandom(.02), getPosY(), getPosZRandom(.02), 0,0,0);
+            for(int i = 0; i<15;i++){
+                world.addParticle(ParticleTypes.FIREWORK,getPosXRandom(.02), getPosY(), getPosZRandom(.02), rand.nextFloat() * (-.3) + .15 ,rand.nextFloat() * (-.3) + .15,rand.nextFloat() * (-.3) + .15);
+            }
+        }
+        else{
+            world.playSound(null,getPosX(),getPosY(),getPosZ(), SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, SoundCategory.PLAYERS,.8f,1.2f);
         }
         if(result.getType() == RayTraceResult.Type.ENTITY){
             Entity hit = ((EntityRayTraceResult)result).getEntity();
@@ -74,6 +88,8 @@ public class JoltProjectileEntity extends ProjectileItemEntity {
             hit.hurtResistantTime = 0;
             hit.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this,getThrower()), damage /2);
         }
+
+
         this.remove();
     }
 
