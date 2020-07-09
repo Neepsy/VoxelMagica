@@ -3,6 +3,7 @@ package com.neepsy.voxelmagica.items.spells;
 import com.neepsy.voxelmagica.VoxelMagica;
 import com.neepsy.voxelmagica.effects.ModEffects;
 import com.neepsy.voxelmagica.entity.JoltProjectileEntity;
+import com.neepsy.voxelmagica.entity.ScorchProjectileEntity;
 import com.neepsy.voxelmagica.items.ModItems;
 import com.neepsy.voxelmagica.util.Config;
 import com.neepsy.voxelmagica.util.ManaProvider;
@@ -17,9 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.IntNBT;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -77,6 +76,8 @@ public class SpellScorchItem extends Item{
                     projectile.setMotion(0,0,0);
                     projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,4,0);
                     worldIn.addEntity(projectile);
+                    worldIn.playSound(null,playerIn.getPosX(),playerIn.getPosY(),playerIn.getPosZ(),
+                            SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.PLAYERS,.5f,1.8f);
                 }
 
             }
@@ -105,10 +106,12 @@ public class SpellScorchItem extends Item{
                 playerIn.removePotionEffect(ModEffects.BLACKMANA_EFFECT);
 
                 if(!worldIn.isRemote()){
-                    JoltProjectileEntity projectile = new JoltProjectileEntity(playerIn, worldIn);
+                    ScorchProjectileEntity projectile = new ScorchProjectileEntity(playerIn, worldIn);
                     projectile.setMotion(0,0,0);
                     projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,4.5f,0);
                     worldIn.addEntity(projectile);
+                    worldIn.playSound(null,playerIn.getPosX(),playerIn.getPosY(),playerIn.getPosZ(),
+                            SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.PLAYERS,.5f,1.8f);
                 }
 
             }

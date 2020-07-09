@@ -4,11 +4,9 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.neepsy.voxelmagica.VoxelMagica;
 import com.neepsy.voxelmagica.blocks.ModBlocks;
 import com.neepsy.voxelmagica.blocks.TestBlockScreen;
+import com.neepsy.voxelmagica.effects.ModEffects;
 import com.neepsy.voxelmagica.entity.*;
-import com.neepsy.voxelmagica.entity.Rendering.AeroblastProjectileRenderer;
-import com.neepsy.voxelmagica.entity.Rendering.InfuseProjectileRenderer;
-import com.neepsy.voxelmagica.entity.Rendering.JoltProjectileRenderer;
-import com.neepsy.voxelmagica.entity.Rendering.ShockboltProjectileRenderer;
+import com.neepsy.voxelmagica.entity.Rendering.*;
 import com.neepsy.voxelmagica.util.Constants;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -39,6 +37,7 @@ public class ClientProxy implements IProxy {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.JOLTPROJECTILE, JoltProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.SHOCKBOLTPROJECTILE, ShockboltProjectileRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.AEROBLASTPROJECTILE, AeroblastProjectileRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.SCORCHPROJECTILE, ScorchProjectileRenderer::new);
     }
 
     @Override

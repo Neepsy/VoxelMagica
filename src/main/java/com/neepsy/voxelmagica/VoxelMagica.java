@@ -211,6 +211,13 @@ public class VoxelMagica
                     .setUpdateInterval(1)
                     .build("aeroblastprojectile")
                     .setRegistryName("aeroblastprojectile"));
+            EntityRegistryEvent.getRegistry().register(EntityType.Builder.<ScorchProjectileEntity>create(EntityClassification.MISC)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .size(.1f,.1f)
+                    .setCustomClientFactory(((spawnEntity, world) -> new ScorchProjectileEntity(world)))
+                    .setUpdateInterval(1)
+                    .build("scorchprojectile")
+                    .setRegistryName("scorchprojectile"));
         }
 
         @SubscribeEvent

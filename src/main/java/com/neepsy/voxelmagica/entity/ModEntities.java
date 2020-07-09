@@ -15,4 +15,7 @@ public class ModEntities {
 
     @ObjectHolder("voxelmagica:aeroblastprojectile")
     public static final EntityType<AeroblastProjectileEntity> AEROBLASTPROJECTILE = null;
+
+    @ObjectHolder("voxelmagica:scorchprojectile")
+    public static final EntityType<ScorchProjectileEntity> SCORCHPROJECTILE = null;
 }

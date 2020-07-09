@@ -10,6 +10,8 @@ import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -61,7 +63,12 @@ public class AeroblastProjectileEntity extends ProjectileItemEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         if(world.isRemote()){
-            world.addParticle(ParticleTypes.EXPLOSION,getPosXRandom(.02), getPosY(), getPosZRandom(.02), 0,0,0);
+            for(int i = 0; i < 25; i++){
+                world.addParticle(ParticleTypes.ENTITY_EFFECT,getPosXRandom(.2), getPosY(), getPosZRandom(.2), .1f,.8f,.1f);
+            }
+
+        }else{
+            world.playSound(null,getPosX(),getPosY(),getPosZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS,.6f,1f);
         }
         if(result.getType() == RayTraceResult.Type.ENTITY){
             Entity hit = ((EntityRayTraceResult)result).getEntity();

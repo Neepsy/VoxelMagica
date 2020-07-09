@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -47,6 +49,7 @@ public class SpellShockboltItem extends Item {
 
             EffectInstance smartcastEffect = playerIn.getActivePotionEffect(ModEffects.SMARTCAST_EFFECT);
             int manaCost = smartcastEffect == null ? manaCostFull : manaCostReduced;
+            manaCost = playerIn.isCreative() ? 0 : manaCost;
 
             if(m.getMana() >= manaCost || playerIn.isCreative()){
                 m.consume(playerIn.isCreative() ? manaCost : manaCost);
@@ -76,6 +79,8 @@ public class SpellShockboltItem extends Item {
                     projectile.setMotion(0,0,0);
                     projectile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0,3.2f,0);
                     worldIn.addEntity(projectile);
+                    worldIn.playSound(null,playerIn.getPosX(),playerIn.getPosY(),playerIn.getPosZ(),
+                            SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.PLAYERS,.5f,2f);
                 }
 
             }

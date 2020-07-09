@@ -29,6 +29,7 @@ public class Config {
 
     public static ForgeConfigSpec.DoubleValue JOLT_DMG;
     public static ForgeConfigSpec.DoubleValue SHOCKBOLT_DMG;
+    public static ForgeConfigSpec.DoubleValue SCORCH_DMG;
 
 
     static {
@@ -44,6 +45,8 @@ public class Config {
                 .defineInRange("joltDamage",9f,1f,100f);
         SHOCKBOLT_DMG = COMMON_BUILDER.comment("Damage dealt by Shockbolt and Aeroblast (50% armor pen)")
                 .defineInRange("shockboltDamage",12f,1f,100f);
+        SCORCH_DMG = COMMON_BUILDER.comment("Damage dealt by Scorch (50% armor pen)")
+                .defineInRange("scorchDamage",24f,1f,100f);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.comment("Energy Settings").push(CATEGORY_ENERGY);
